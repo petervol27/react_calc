@@ -1,32 +1,30 @@
 import { useState } from 'react';
 import Button from './Button';
-
+import { evaluate } from 'mathjs';
 function FullCalculator() {
-  const [input, setInput] = useState(0);
-  const [equation, setEquation] = useState('');
+  const [equation, setEquation] = useState(0);
   const handleInput = (action) => {
     console.log(action);
     console.log(equation);
     if (action === '=') {
-      setInput(equation);
+      setEquation(evaluate(equation));
     } else if (action === 'ac') {
-      setEquation('');
+      setEquation(0);
     } else {
       setEquation(equation + action);
-      setInput(action);
     }
   };
   return (
     <div className="calc-body">
       <div className="calc-screen">
         <div className="calc-operation"></div>
-        <div className="calc-typed">{input}</div>
+        <div className="calc-typed">{equation}</div>
       </div>
       <div className="calc-button-row">
         <Button
           value={'AC'}
           styleName={'ac'}
-          onBtnClick={() => handleInput(0)}
+          onBtnClick={() => handleInput('ac')}
         />
         <Button
           value={'+/−'}
